@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-grgGHGt1wSVo8onkzUr+LMQt4YutBJWnjTLSmjC3b+E=' 'sha256-FFyxv6DbLTtkSAtipe4Z7yk112oMwuOVKyjGKy3v4fU='; style-src 'unsafe-inline'; img-src 'self' data: blob: https://tdwkeivbhfzwrjsiqfxn.supabase.co https://tile.openstreetmap.org; font-src data:; connect-src https://tdwkeivbhfzwrjsiqfxn.supabase.co; manifest-src 'self'; worker-src 'self'; frame-src 'none'; object-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="dark">
+<style>html{visibility:hidden;background:#181715;color-scheme:dark}</style>
+<script>
+  // Frame guard: Chopka never runs inside another page (a framed tap on Seal would be permanent). The page stays hidden
+  // until this check passes; when framed it tries to become the top page, and otherwise the app never starts.
+  (function () {
+    var framed = true;
+    try { framed = window.top !== window.self; } catch (e) { framed = true; }
+    if (!framed) { document.documentElement.style.visibility = "visible"; return; }
+    window.CHOPKA_FRAMED = true;
+    try { window.top.location.replace(window.location.href); } catch (e) { /* a sandboxed frame: stay hidden */ }
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#181715">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Chopka">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Chopka</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<style>html{font-size:17px}@supports (font: -apple-system-body){html{font:-apple-system-body}}:root:not([data-ck-none]),.chopka{color-scheme:dark;
+--deep: #171613;
+--bg: #181715;
+--panel: #24221e;
+--line: #3c382f;
+--muted: #aaa296;
+--gold: #d6ad61;
+--ink: #f5f0e6;
+--panel-2: #2d2a25;
+--panel-3: #36322c;
+--sep: #4a453c;
+--field-line: #857d70;
+--ink-2: var(--muted);
+--ink-3: #9a9286;
+--fill: rgba(245, 240, 230, .08);
+--fill-strong: rgba(245, 240, 230, .14);
+--glass: color-mix(in srgb, var(--bg) 85%, transparent);
+--glass-edge: rgba(245, 240, 230, .1);
+--scrim: rgba(8, 7, 6, .58);
+--seal: var(--gold);
+--seal-glow: color-mix(in srgb, var(--gold) 22%, transparent);
+--good: #8cc9a1;
+--alleg: #a9b4e8;
+--caution: #f0997b;
+--danger: #ff8a80;
+--tint: var(--ink);
+--on-tint: #181715;
+--font-text: "DM Sans", -apple-system, system-ui, "Helvetica Neue", sans-serif;
+--font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+--t-large: 700 2rem /calc(41 / 17 * 1rem) var(--font-text);
+--ls-large: -.03em;
+--t-title1: 700 calc(28 / 17 * 1rem)/ 2rem var(--font-text);
+--ls-title1: -.025em;
+--t-title2: 700 calc(22 / 17 * 1rem)/calc(28 / 17 * 1rem) var(--font-text);
+--ls-title2: -.02em;
+--t-title3: 600 calc(20 / 17 * 1rem)/calc(25 / 17 * 1rem) var(--font-text);
+--ls-title3: -.015em;
+--t-headline: 600 1rem /calc(22 / 17 * 1rem) var(--font-text);
+--t-body: 400 1rem /calc(24 / 17 * 1rem) var(--font-text);
+--t-callout: 400 calc(16 / 17 * 1rem)/calc(21 / 17 * 1rem) var(--font-text);
+--t-subhead: 400 calc(15 / 17 * 1rem)/calc(20 / 17 * 1rem) var(--font-text);
+--t-footnote: 400 calc(13 / 17 * 1rem)/calc(18 / 17 * 1rem) var(--font-text);
+--t-caption: 500 max(12px, calc(12 / 17 * 1rem))/calc(16 / 17 * 1rem) var(--font-text);
+--t-label: 700 max(12px, calc(12 / 17 * 1rem))/calc(16 / 17 * 1rem) var(--font-text);
+--ls-label: .09em;
+--t-mono: 500 calc(13 / 17 * 1rem)/calc(18 / 17 * 1rem) var(--font-mono);
+--t-mono-label: 600 max(12px, calc(12 / 17 * 1rem))/calc(16 / 17 * 1rem) var(--font-mono);
+--ls-mono: .06em;
+--t-figure: 700 calc(36 / 17 * 1rem)/calc(40 / 17 * 1rem) var(--font-text);
+--ls-figure: -.04em;
+--s-1: 4px;
+--s-2: 8px;
+--s-3: 12px;
+--s-4: 16px;
+--s-5: 20px;
+--s-6: 24px;
+--s-8: 32px;
+--s-10: 40px;
+--gutter: 16px;
+--tap: 44px;
+--row: 52px;
+--nav-h: 44px;
+--tab-h: 62px;
+--cap-d: 60px;
+--cap-rise: 22px;
+--safe-t: env(safe-area-inset-top, 0px);
+--safe-b: env(safe-area-inset-bottom, 0px);
+--tab-top: calc(var(--tab-h) + max(12px, var(--safe-b)) + var(--cap-rise));
+--tab-clear: calc(var(--tab-top) + 24px);
+--r-xs: 6px;
+--r-sm: 10px;
+--r-md: 14px;
+--r-lg: 20px;
+--r-xl: 28px;
+--r-pill: 999px;
+--shadow-float: 0 10px 30px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .04) inset;
+--ease-out: cubic-bezier(.32, .72, 0, 1);
+--ease-in: cubic-bezier(.4, 0, 1, 1);
+--dur-press: 90ms;
+--dur-fast: .18s;
+--dur-base: .28s;
+--spring-smooth: var(--ease-out);
+--spring-smooth-ms: .5s;
+--spring-snappy: var(--ease-out);
+--spring-snappy-ms: .35s;
+--spring-bouncy: var(--ease-out);
+--spring-bouncy-ms: .5s}@media(max-width:374px){:root:not([data-ck-none]),.chopka{
+--tab-h: 58px;
+--cap-d: 54px;
+--cap-rise: 20px}}@supports (transition-timing-function: linear(0,1)){:root:not([data-ck-none]),.chopka{
+--spring-smooth: linear(0, .005 1.2%, .019 2.5%, .08 5.5%, .162 8.5%, .457 18.2%, .549 21.8%, .629 25.2%, .694 28.5%, .752 32%, .804 35.8%, .846 39.5%, .886 44%, .918 49%, .944 54.5%, .964 60.8%, .988 75.5%, 1);
+--spring-smooth-ms: .67s;
+--spring-snappy: linear(0, .005 1.2%, .022 2.8%, .054 4.5%, .095 6.2%, .19 9.5%, .51 19.5%, .608 23%, .687 26.2%, .755 29.5%, .813 32.8%, .863 36.2%, .902 39.8%, .939 44%, .966 48.5%, .985 53.5%, .997 59%, 1.006 72.5%, 1);
+--spring-snappy-ms: .45s;
+--spring-bouncy: linear(0, .006 1.2%, .028 2.8%, .063 4.2%, .108 5.8%, .217 8.8%, .476 15%, .593 18%, .699 21%, .782 23.8%, .852 26.5%, .91 29.2%, .958 32.2%, .994 35.2%, 1.017 38%, 1.033 41%, 1.046 47.8%, 1.004 77%, 1);
+--spring-bouncy-ms: .73s}}@media(prefers-reduced-motion:reduce){:root:not([data-ck-none]),.chopka{
+--spring-smooth: ease-out;
+--spring-smooth-ms: .16s;
+--spring-snappy: ease-out;
+--spring-snappy-ms: .12s;
+--spring-bouncy: ease-out;
+--spring-bouncy-ms: .16s;
+--dur-fast: .12s;
+--dur-base: .16s}}:root:not([data-ck-none]){
+--surface: var(--panel);
+--surface-2: var(--panel-2);
+--accent: var(--tint);
+--accent-ink: var(--on-tint);
+--accent-soft: var(--fill);
+--good-soft: color-mix(in srgb, var(--good) 16%, var(--panel));
+--warn: var(--caution);
+--warn-soft: color-mix(in srgb, var(--caution) 16%, var(--panel));
+--bad: var(--danger);
+--bad-soft: color-mix(in srgb, var(--danger) 16%, var(--panel));
+--missing: var(--ink-3);
+--hatch: var(--panel-3);
+--overlay: var(--scrim);
+--shadow: none;
+--radius: var(--r-md);
+--display: var(--font-text);
+--body: var(--font-text);
+--mono: var(--font-mono)}.pill.allegation{background:color-mix(in srgb,var(--alleg) 14%,var(--panel));color:var(--alleg)}.dot.allegation{background:linear-gradient(90deg,var(--alleg) 50%,transparent 50%);box-shadow:inset 0 0 0 2px var(--alleg)}[hidden]{display:none!important}html{background:var(--bg);overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}body{background:var(--bg);color:var(--ink);font:var(--t-body);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}:focus-visible{outline:3px solid var(--ink);outline-offset:2px}.mono{font:var(--t-mono)}.ck-label{font:var(--t-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ink-2)}.btn-google{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:48px;margin:0;padding:calc(13 / 17 * 1rem) calc(16 / 17 * 1rem);border:1px solid #8E918F;border-radius:999px;background:#131314;color:#e3e3e3;font:500 calc(14 / 17 * 1rem)/calc(20 / 17 * 1rem) "Roboto",var(--font-text);letter-spacing:.015em;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;overflow:hidden}.btn-google__g{flex:none;display:block;width:20px;height:20px}.btn-google__label{min-width:0;overflow-wrap:anywhere}.btn-google:after{content:"";position:absolute;inset:0;border-radius:inherit;background:#e3e3e31f;opacity:0;transition:opacity .12s ease-out;pointer-events:none}.btn-google:active:not(:disabled):after{opacity:1}.btn-google:disabled{opacity:.38;cursor:default}.btn-google:focus-visible{outline:3px solid var(--ink);outline-offset:3px}@media(prefers-reduced-motion:reduce){.btn-google:after{transition:none}}@font-face{font-family:Roboto;font-style:normal;font-display:swap;font-weight:500;unicode-range:U+0020,U+0043,U+0047,U+0065,U+0067,U+0068,U+0069,U+006C,U+006E,U+006F,U+0074,U+0075,U+0077;src:url(data:font/woff2;base64,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) format("woff2")}body{margin:0;min-height:100vh;min-height:100dvh}.pr{box-sizing:border-box;max-width:560px;margin:0 auto;padding:max(var(--s-8),calc(var(--safe-t) + var(--s-4))) max(var(--gutter),env(safe-area-inset-right,0px)) max(var(--s-8),calc(var(--safe-b) + var(--s-6))) max(var(--gutter),env(safe-area-inset-left,0px))}.pr *,.pr *:before,.pr *:after{box-sizing:border-box}.pr-title{margin:0 0 var(--s-2);font:var(--t-title1);letter-spacing:var(--ls-title1);color:var(--ink)}.pr-lede{margin:0 0 var(--s-6);font:var(--t-callout);color:var(--ink-2)}.pr-group{margin:0 0 var(--s-6)}.pr-head{margin:0 0 var(--s-2);padding:0 var(--s-4);font:var(--t-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ink-2)}.pr-list{margin:0;padding:0;list-style:none;background:var(--panel);border-radius:var(--r-md);overflow:hidden}.pr-row{position:relative;display:flex;align-items:baseline;gap:var(--s-3);min-height:40px;padding:var(--s-2) var(--s-4)}.pr-row+.pr-row:before{content:"";position:absolute;top:0;right:0;left:var(--s-4);height:1px;background:var(--sep)}.pr-n{flex:none;min-width:1.6em;font:var(--t-mono-label);color:var(--ink-3)}.pr-k{flex:1 1 0;min-width:0;font:var(--t-callout);color:var(--ink);overflow-wrap:break-word}.pr-d{display:block;margin-top:2px;font:var(--t-footnote);color:var(--ink-2)}.pr-d:empty{display:none}.pr-v{flex:0 0 auto;max-width:58%;font:var(--t-callout);color:var(--ink-2);text-align:right;overflow-wrap:break-word}.pr-row--block{flex-direction:column;align-items:stretch;gap:var(--s-1)}.pr-row--block .pr-k{flex:none}.pr-row--block .pr-v{max-width:none;text-align:left;overflow-wrap:anywhere}.pr-mono{font:var(--t-mono)}.pr-v[data-tone=yes]{color:var(--good);font-weight:600}.pr-v[data-tone=no]{color:var(--caution);font-weight:600}.pr-v[data-tone=wait]{color:var(--ink-3);animation:pr-pulse 1.4s ease-in-out infinite}@keyframes pr-pulse{50%{opacity:.45}}.pr-start{margin:0 0 var(--s-6)}.pr-status{min-height:calc(18 / 17 * 1rem);margin:var(--s-3) 0 0;font:var(--t-footnote);color:var(--ink-2);text-align:center}.pr-alert{margin:0 0 var(--s-4);padding:var(--s-3) var(--s-4);border-radius:var(--r-sm);background:color-mix(in srgb,var(--caution) 14%,var(--panel));color:var(--ink);font:var(--t-subhead)}.pr-end{margin:0;padding:0 var(--s-4);font:var(--t-callout);color:var(--ink)}.pr-noscript{max-width:560px;margin:0 auto;padding:var(--s-8) var(--gutter);font:var(--t-body);color:var(--ink)}@media(prefers-reduced-motion:reduce){.pr-v[data-tone=wait]{animation:none}}</style>
+</head>
+<body>
+<noscript><style>html{visibility:visible}</style><p class="pr-noscript">This check needs JavaScript, and this window has it turned off. Copy the address into Safari.</p></noscript>
+<main class="pr" id="pr">
+  <h1 class="pr-title">Chopka sign-in check</h1>
+  <p class="pr-lede">This page checks that Google sign-in works on this phone before Chopka moves here. It opens nothing in the vault and keeps nothing afterwards.</p>
+
+  <section class="pr-group" id="pr-phone" aria-labelledby="pr-phone-h">
+    <h2 class="pr-head" id="pr-phone-h">This phone</h2>
+    <ul class="pr-list">
+      <li class="pr-row pr-row--block"><span class="pr-k">Browser</span><span class="pr-v pr-mono" id="ph-browser" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-k">Opened from the Home Screen</span><span class="pr-v" id="ph-home" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-k">iOS version</span><span class="pr-v" id="ph-ios" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-k">Screen</span><span class="pr-v" id="ph-screen" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-k">Storage kept</span><span class="pr-v" id="ph-storage" data-tone="wait">Checking…</span></li>
+    </ul>
+  </section>
+
+  <section class="pr-group" id="pr-result" aria-labelledby="pr-result-h" hidden>
+    <h2 class="pr-head" id="pr-result-h">What came back</h2>
+    <p class="pr-alert" id="pr-note" role="alert" hidden></p>
+    <ol class="pr-list" id="pr-lines" aria-busy="true">
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">1</span><span class="pr-k">Opened from the Home Screen</span><span class="pr-v" id="ln-1" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">2</span><span class="pr-k">Came back where it started<span class="pr-d" id="ld-2"></span></span><span class="pr-v" id="ln-2" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">3</span><span class="pr-k">Google sign-in is turned on</span><span class="pr-v" id="ln-3" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">4</span><span class="pr-k">New sign-ups are turned off</span><span class="pr-v" id="ln-4" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">5</span><span class="pr-k">Email sign-in is turned on<span class="pr-d">Either answer is fine for now.</span></span><span class="pr-v" id="ln-5" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">6</span><span class="pr-k">Every other sign-in method is off<span class="pr-d" id="ld-6"></span></span><span class="pr-v" id="ln-6" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">7</span><span class="pr-k">The sign-in came back to this screen</span><span class="pr-v" id="ln-7" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">8</span><span class="pr-k">Supabase accepted the sign-in</span><span class="pr-v" id="ln-8" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">9</span><span class="pr-k">A sign-in lasts<span class="pr-d" id="ld-9">before it renews</span></span><span class="pr-v" id="ln-9" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">10</span><span class="pr-k">Account ID begins with</span><span class="pr-v pr-mono" id="ln-10" data-tone="wait">Checking…</span></li>
+      <li class="pr-row"><span class="pr-n" aria-hidden="true">11</span><span class="pr-k">Signed out again</span><span class="pr-v" id="ln-11" data-tone="wait">Checking…</span></li>
+    </ol>
+  </section>
+
+  <div class="pr-start" id="pr-start">
+    <p class="pr-alert" id="pr-err" role="alert" hidden></p>
+    <button class="btn-google" type="button" id="pr-google"><img class="btn-google__g" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cGF0aCBmaWxsPSIjRUE0MzM1IiBkPSJNMjQgOS41YzMuNTQgMCA2LjcxIDEuMjIgOS4yMSAzLjZsNi44NS02Ljg1QzM1LjkgMi4zOCAzMC40NyAwIDI0IDAgMTQuNjIgMCA2LjUxIDUuMzggMi41NiAxMy4yMmw3Ljk4IDYuMTlDMTIuNDMgMTMuNzIgMTcuNzQgOS41IDI0IDkuNXoiLz48cGF0aCBmaWxsPSIjNDI4NUY0IiBkPSJNNDYuOTggMjQuNTVjMC0xLjU3LS4xNS0zLjA5LS4zOC00LjU1SDI0djkuMDJoMTIuOTRjLS41OCAyLjk2LTIuMjYgNS40OC00Ljc4IDcuMThsNy43MyA2YzQuNTEtNC4xOCA3LjA5LTEwLjM2IDcuMDktMTcuNjV6Ii8+PHBhdGggZmlsbD0iI0ZCQkMwNSIgZD0iTTEwLjUzIDI4LjU5Yy0uNDgtMS40NS0uNzYtMi45OS0uNzYtNC41OXMuMjctMy4xNC43Ni00LjU5bC03Ljk4LTYuMTlDLjkyIDE2LjQ2IDAgMjAuMTIgMCAyNGMwIDMuODguOTIgNy41NCAyLjU2IDEwLjc4bDcuOTctNi4xOXoiLz48cGF0aCBmaWxsPSIjMzRBODUzIiBkPSJNMjQgNDhjNi40OCAwIDExLjkzLTIuMTMgMTUuODktNS44MWwtNy43My02Yy0yLjE1IDEuNDUtNC45MiAyLjMtOC4xNiAyLjMtNi4yNiAwLTExLjU3LTQuMjItMTMuNDctOS45MWwtNy45OCA2LjE5QzYuNTEgNDIuNjIgMTQuNjIgNDggMjQgNDh6Ii8+PC9zdmc+Cg==" alt="" width="20" height="20"><span class="btn-google__label">Continue with Google</span></button>
+    <p class="pr-status" id="pr-status" role="status" aria-live="polite"></p>
+  </div>
+
+  <p class="pr-end" id="pr-end" hidden>Send a screenshot of this screen to Claude.</p>
+</main>
+<script>
+(() => {
+  "use strict";
+  if (window.CHOPKA_FRAMED) return;
+
+  const SUPABASE_URL = "https://tdwkeivbhfzwrjsiqfxn.supabase.co";
+  const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkd2tlaXZiaGZ6d3Jqc2lxZnhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5OTg5ODYsImV4cCI6MjEwNjU3NDk4Nn0.L32I5zWj8QLSUn1E7YGjzaMDN6IhvQZhW58sQA5pWEg";
+  const KEY = "chopka.probe.v1";
+  const STALE_MS = 10 * 60 * 1000;
+  const T = {
+    offline: "Couldn't reach Supabase. Check your connection and try again.",
+    storage: "This window can't keep the sign-in check, so Google sign-in can't finish here. Open Chopka from its Home Screen icon, or in Safari with Block All Cookies off.",
+    failed: "Google sign-in didn't work. Try again in a moment.",
+    cancelled: "Google sign-in was cancelled.",
+    notSetUp: "That Google account isn't set up for Chopka. Tap Continue with Google and choose the account you use for Chopka.",
+    unfinished: "That sign-in didn't finish. Tap Continue with Google again.",
+    elsewhere: "That sign-in didn't start on this screen. Tap Continue with Google here.",
+    otherWindow: "This sign-in started in another window, probably Chopka on your Home Screen. Close this tab and open Chopka from its Home Screen icon.",
+    rateLimited: "Too many attempts. Wait a minute, then try again.",
+    banned: "This account can't sign in.",
+  };
+
+  const PKCE = (() => {
+    const CHALLENGE = /^[A-Za-z0-9_-]{43}$/;
+    const VERIFIER = /^[A-Za-z0-9._~-]{43,128}$/;
+    const CODE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const TIMEOUT_MS = 20000;
+    const b64url = (bytes) => {
+      let s = "";
+      for (const b of bytes) s += String.fromCharCode(b);
+      return btoa(s).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
+    };
+    const verifier = () => b64url(crypto.getRandomValues(new Uint8Array(32)));
+    const challenge = async (v) => b64url(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(v))));
+    const authorizeUrl = (base, redirectTo, c) => {
+      if (typeof c !== "string" || !CHALLENGE.test(c)) throw new Error("The challenge is not 43 base64url characters.");
+      return `${base}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectTo)}&code_challenge=${c}&code_challenge_method=s256&prompt=select_account`;
+    };
+    const exchange = async (base, key, code, v) => {
+      if (!CODE.test(code) || !VERIFIER.test(v)) return { ok: false, status: 0, body: {}, failure: "input" };
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+      try {
+        const r = await fetch(`${base}/auth/v1/token?grant_type=pkce`, { method: "POST", headers: { apikey: key, "content-type": "application/json" }, body: JSON.stringify({ auth_code: code, code_verifier: v }), signal: ctrl.signal });
+        let body = {};
+        try { body = (await r.json()) || {}; } catch (e) { if (ctrl.signal.aborted) throw e; }
+        const ok = r.ok && typeof body.access_token === "string";
+        return { ok, status: r.status, body, failure: ok ? null : "refused" };
+      } catch (e) {
+        return { ok: false, status: 0, body: {}, failure: ctrl.signal.aborted ? "timeout" : "network" };
+      } finally {
+        clearTimeout(timer);
+      }
+    };
+    return Object.freeze({ b64url, verifier, challenge, authorizeUrl, exchange });
+  })();
+
+  const $ = (id) => document.getElementById(id);
+  const put = (id, text, tone) => {
+    const el = $(id);
+    el.textContent = text;
+    if (tone) el.dataset.tone = tone; else delete el.dataset.tone;
+  };
+  const yesNo = (id, yes, plain) => put(id, yes ? "Yes" : "No", plain ? "" : yes ? "yes" : "no");
+  const standalone = () => {
+    let s = false;
+    try { s = matchMedia("(display-mode: standalone)").matches; } catch (e) { s = false; }
+    return s || navigator.standalone === true;
+  };
+  const ownFolder = () => {
+    const u = new URL("./", location.href);
+    u.search = "";
+    u.hash = "";
+    return u.toString();
+  };
+  const timed = (ms) => {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), ms);
+    return ctrl.signal;
+  };
+
+  const iosVersion = (ua) => {
+    const m = /\bOS (\d+)[_.](\d+)(?:[_.](\d+))? like Mac OS X/.exec(ua || "");
+    return m ? [m[1], m[2], m[3]].filter(Boolean).join(".") : "Not shown";
+  };
+  const storageKept = async () => {
+    try {
+      if (!navigator.storage || typeof navigator.storage.persist !== "function") return "Not offered";
+      return (await navigator.storage.persist()) ? "Yes" : "No";
+    } catch (e) {
+      return "Not offered";
+    }
+  };
+  const thisPhone = () => {
+    put("ph-browser", navigator.userAgent || "Not shown");
+    yesNo("ph-home", standalone(), true);
+    put("ph-ios", iosVersion(navigator.userAgent));
+    const ratio = Math.round((window.devicePixelRatio || 1) * 1000) / 1000;
+    put("ph-screen", `${screen.width} × ${screen.height} at ${ratio}×`);
+    storageKept().then((v) => put("ph-storage", v));
+  };
+
+  const ready = () => {
+    const b = $("pr-google");
+    b.disabled = false;
+    b.removeAttribute("aria-busy");
+    put("pr-status", "");
+  };
+  const showError = (text) => {
+    const e = $("pr-err");
+    e.textContent = text;
+    e.hidden = !text;
+  };
+  const start = async () => {
+    const b = $("pr-google");
+    if (b.disabled) return;
+    showError("");
+    if (navigator.onLine === false) return showError(T.offline);
+    b.disabled = true;
+    b.setAttribute("aria-busy", "true");
+    put("pr-status", "Opening Google…");
+    let url;
+    try {
+      const v = PKCE.verifier();
+      url = PKCE.authorizeUrl(SUPABASE_URL, ownFolder(), await PKCE.challenge(v));
+      try {
+        localStorage.setItem(KEY, JSON.stringify({ v, t: Date.now(), standalone: standalone() }));
+      } catch (e) {
+        ready();
+        return showError(T.storage);
+      }
+    } catch (e) {
+      ready();
+      return showError(T.failed);
+    }
+    setTimeout(ready, 15000);
+    location.assign(url);
+  };
+
+  const readStored = () => {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(KEY);
+      localStorage.removeItem(KEY);
+    } catch (e) {
+      raw = null;
+    }
+    try {
+      const s = JSON.parse(raw);
+      return s && typeof s.v === "string" && typeof s.t === "number" ? s : null;
+    } catch (e) {
+      return null;
+    }
+  };
+  const returnError = (error, code) => {
+    if (code === "signup_disabled") return T.notSetUp;
+    if (code === "user_banned") return T.banned;
+    if (code === "over_request_rate_limit" || code === "over_email_send_rate_limit") return T.rateLimited;
+    if (error === "access_denied" && !code) return T.cancelled;
+    return T.failed;
+  };
+  const exchangeError = (r) => {
+    const ec = r.body && typeof r.body.error_code === "string" ? r.body.error_code : "";
+    if (r.status === 429 || ec === "over_request_rate_limit") return T.rateLimited;
+    if (ec === "user_banned") return T.banned;
+    return T.unfinished;
+  };
+  const readSettings = async () => {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: ANON_KEY }, signal: timed(20000) });
+      const j = await r.json();
+      return r.ok && j && j.external && typeof j.external === "object" ? j : null;
+    } catch (e) {
+      return null;
+    }
+  };
+  const showSettings = (s) => {
+    if (!s) {
+      for (const n of [3, 4, 5, 6]) put(`ln-${n}`, "Not known", "no");
+      put("ld-6", "Couldn't read the sign-in settings.");
+      return;
+    }
+    const ext = s.external;
+    yesNo("ln-3", ext.google === true);
+    yesNo("ln-4", s.disable_signup === true);
+    yesNo("ln-5", ext.email === true, true);
+    const on = Object.keys(ext).filter((k) => k !== "google" && k !== "email" && ext[k] === true);
+    if (s.saml_enabled === true) on.push("saml");
+    on.sort();
+    yesNo("ln-6", on.length === 0);
+    put("ld-6", on.length ? `On: ${on.map((k) => k.replace(/_/g, " ")).join(", ")}` : "");
+  };
+  const signOut = async (token) => {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/auth/v1/logout?scope=local`, { method: "POST", headers: { apikey: ANON_KEY, authorization: `Bearer ${token}` }, signal: timed(20000) });
+      return r.ok;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const results = async (ret) => {
+    $("pr-phone").hidden = true;
+    $("pr-start").hidden = true;
+    $("pr-result").hidden = false;
+    const stored = readStored();
+    const now = standalone();
+    const where = now ? "Came back in the Home Screen app" : "Came back in Safari";
+    yesNo("ln-1", now, true);
+    if (stored) {
+      yesNo("ln-2", stored.standalone === now);
+      put("ld-2", where);
+    } else {
+      yesNo("ln-2", false);
+      put("ld-2", `${where}; the sign-in started somewhere else`);
+    }
+    const settings = readSettings().then(showSettings);
+    yesNo("ln-7", Boolean(stored));
+
+    let note = "";
+    let session = null;
+    const age = stored ? Date.now() - stored.t : 0;
+    if (ret.error || ret.errorCode) note = returnError(ret.error, ret.errorCode);
+    else if (!stored) note = now ? T.elsewhere : T.otherWindow;
+    else if (age > STALE_MS || age < -60000) note = T.unfinished;
+    else {
+      const r = await PKCE.exchange(SUPABASE_URL, ANON_KEY, ret.code, stored.v);
+      if (r.ok) session = { token: r.body.access_token, expiresIn: r.body.expires_in, userId: r.body.user && r.body.user.id };
+      else note = exchangeError(r);
+    }
+    yesNo("ln-8", Boolean(session));
+    const minutes = session && typeof session.expiresIn === "number" ? Math.round(session.expiresIn / 60) : null;
+    if (minutes === null) put("ln-9", "Not known", session ? "no" : "");
+    else put("ln-9", `${minutes} minute${minutes === 1 ? "" : "s"}`, minutes === 15 ? "" : "no");
+    if (minutes !== null && minutes !== 15) put("ld-9", "before it renews (15 expected)");
+    const id = session && typeof session.userId === "string" ? session.userId.slice(0, 8) : "";
+    put("ln-10", id || "Not known", id || !session ? "" : "no");
+    $("ln-10").classList.toggle("pr-mono", Boolean(id));
+    if (session) {
+      const out = await signOut(session.token);
+      session = null;
+      yesNo("ln-11", out);
+    } else {
+      put("ln-11", "No sign-in to end");
+    }
+    await settings;
+    $("pr-lines").setAttribute("aria-busy", "false");
+    if (note) {
+      put("pr-note", note);
+      $("pr-note").hidden = false;
+      $("pr-start").hidden = false;
+      ready();
+    }
+    $("pr-end").hidden = false;
+  };
+
+  const here = new URL(location.href);
+  const frag = new URLSearchParams(here.hash.replace(/^#/, ""));
+  const ret = {
+    code: here.searchParams.get("code"),
+    error: here.searchParams.get("error") || frag.get("error"),
+    errorCode: here.searchParams.get("error_code") || frag.get("error_code"),
+  };
+  const AUTH_KEYS = ["code", "state", "error", "error_code", "error_description"];
+  const authHash = /(^#|&)(access_token|refresh_token|error\w*)=/.test(here.hash);
+  if (authHash || AUTH_KEYS.some((k) => here.searchParams.has(k))) {
+    for (const k of AUTH_KEYS) here.searchParams.delete(k);
+    if (authHash) here.hash = "";
+    history.replaceState(null, "", here.toString());
+  }
+
+  $("pr-google").addEventListener("click", start);
+  addEventListener("pageshow", (e) => { if (e.persisted) ready(); });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") ready(); });
+
+  if (ret.code || ret.error || ret.errorCode) {
+    results(ret).catch(() => {
+      for (const el of document.querySelectorAll('#pr-lines [data-tone="wait"]')) put(el.id, "Not known");
+      put("pr-note", T.failed);
+      $("pr-note").hidden = false;
+      $("pr-lines").setAttribute("aria-busy", "false");
+      $("pr-start").hidden = false;
+      ready();
+      $("pr-end").hidden = false;
+    });
+  } else {
+    let old = null;
+    try { old = JSON.parse(localStorage.getItem(KEY)); } catch (e) { old = null; }
+    if (old && !(Date.now() - old.t <= STALE_MS)) {
+      try { localStorage.removeItem(KEY); } catch (e) { old = null; }
+    }
+    thisPhone();
+  }
+})();
+</script>
+</body>
+</html>
