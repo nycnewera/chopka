@@ -4,7 +4,7 @@
 // fails is the kept page served. Every other request passes through untouched: nothing to Supabase and no request made
 // with cache "no-store" (the page fingerprint) is ever answered from or written to the cache. No push, no sync, no messages.
 "use strict";
-const PAGE_SHA256 = "45d220030d75df769f345a014bf5b151a140d22f00b434a0420828c88f235b74";
+const PAGE_SHA256 = "61c8546574f506e41dcabd8c9ad2c6e9b628a390217b43af6f270f9c6310f99d";
 const CACHE = "chopka-" + PAGE_SHA256;
 const PRECACHE = [
   "./",
